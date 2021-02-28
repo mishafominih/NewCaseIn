@@ -1,15 +1,19 @@
 import psycopg2
+from datetime import date
+
 
 class Base:
-    TableName : str
+    TableName: str
 
     def __str__(self):
         return None
 
+
 class Person(Base):
     TableName = "Person"
-    def __init__(self, Telephone : int, Name : str, Post: str, DataStart : str,
-                 Salary : int, City : str, Office : str, Talk : bool):
+
+    def __init__(self, Telephone: int, Name: str, Post: str, DataStart: date,
+                 Salary: int, City: str, Office: str, Talk: bool):
         self.TELEPHONE = Telephone
         self.NAME = Name
         self.POST = Post
@@ -33,19 +37,18 @@ class Database:
         self.conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         self.cur = self.conn.cursor()
 
-    #основная функция.
-    def MakeRequest(self, request : str):
+    # основная функция.
+    def MakeRequest(self, request: str):
         self.cur.execute(request)
         try:
             return self.cur.fetchall()
         except:
             return None
 
-    def AddData(self, base : Base):
-        self.MakeRequest(f'''INSERT INTO {base.TableName} VALUES ({base.__str__()})
-        ''')
+    def AddData(self, base: Base):
+        self.MakeRequest(f'''INSERT INTO {base.TableName} VALUES ({base.__str__()}) ON CONFLICT DO NOTHING;''')
 
-    def GetAllData(self, tableName : str):
+    def GetAllData(self, tableName: str):
         return self.MakeRequest("SELECT * FROM " + tableName)
 
     def Save(self):
