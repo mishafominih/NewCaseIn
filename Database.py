@@ -24,6 +24,16 @@ class Person(Base):
                f" {self.SALARY}, '{self.CITY}', '{self.OFFICE}', '{self.TALK}'"
 
 
+class Post(Base):
+    TableName = "Post"
+    def __init__(self, name:str, level:str):
+        self.NAME = name
+        self.LEVEL = level
+
+    def __str__(self):
+        return f"'{self.NAME}', '{self.LEVEL}'"
+
+
 class Database:
 
     def __init__(self):
