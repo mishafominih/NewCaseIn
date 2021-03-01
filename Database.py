@@ -12,11 +12,13 @@ class Base:
 class Person(Base):
     TableName = "Person"
 
-    def __init__(self, Telephone: int, Name: str, Post: str, DataStart: date,
+    def __init__(self, Telephone: int, Name: str, TelegramId:int, Post: str, PostId: int, DataStart: date,
                  Salary: int, City: str, Office: str, Talk: bool):
         self.TELEPHONE = Telephone
         self.NAME = Name
+        self.TELEGRAMID = TelegramId
         self.POST = Post
+        self.POSTID = PostId
         self.DATASTART = DataStart
         self.SALARY = Salary
         self.CITY = City
@@ -24,18 +26,29 @@ class Person(Base):
         self.TALK = Talk
 
     def __str__(self):
-        return f"{self.TELEPHONE}, '{self.NAME}', '{self.POST}', '{self.DATASTART}'," \
+        return f"{self.TELEPHONE}, '{self.NAME}', '{self.TELEGRAMID}', '{self.POST}', '{self.POSTID}', '{self.DATASTART}'," \
                f" {self.SALARY}, '{self.CITY}', '{self.OFFICE}', '{self.TALK}'"
 
 
 class Post(Base):
     TableName = "Post"
-    def __init__(self, name:str, level:str):
-        self.NAME = name
-        self.LEVEL = level
+    def __init__(self, Id:int, level:str):
+        self.ID = Id
+        self.LEVELS = level
 
     def __str__(self):
-        return f"'{self.NAME}', '{self.LEVEL}'"
+        return f"'{self.ID}', '{self.LEVELS}'"
+
+
+class Record(Base):
+    TableName = 'Leaderboard'
+    def __init__(self, PersonId: int, QuestId: int, Score: int, Show: bool):
+        self.PERSONID = PersonId,
+        self.QUESTID = QuestId,
+        self.SCORE = Score,
+        self.SHOW = Show
+    def __str__(self):
+        return f"{self.PERSONID}, '{self.QUESTID}', '{self.SCORE}', '{self.SHOW}'"
 
 
 class Database:
